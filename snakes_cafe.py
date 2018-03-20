@@ -54,14 +54,15 @@ menu = {
     'Drinks': {
         'Coffee': [0, 3.00],
         'Tea': [0, 3.00],
-        'Milk': [0, 3.00],
+        'Beer': [0, 5.50],
         'Soda': [0, 3.00],
         'Juice': [0, 3.00],
-        'Water': [0, 3.00]
+        'Evian': [0, 1.00]
     }
 }
 
 order_line = ''
+subtotal = 0
 
 def print_menu():
     print('Menu:\n')
@@ -72,20 +73,36 @@ def print_menu():
         print()
 
 def input_item():
+    # subtotal = 0
     order_line = input('> ').title()
-    while order_line != 'quit':
-        if order_line in menu.items():
-            print('ordered')
-            # order[order_line] += 1
-            # print('You have added {} {} to your order'.format(order[order_line], order_line))
-            # order_line = input('> ')
-        else:
-            print('Please enter a valid menu item')
-            order_line = input('> ')
+    if order_line == 'Quit':
+        print('Bye!')
+        quit()
+    elif order_line == 'Order':
+        print('yes')
+        # TODO  print order
+        order_line = input('> ').title()
+    else:
+        for key, value in menu.items():
+            if order_line in value.keys():
+                value[order_line][0] += 1
+                subtotal += value[order_line][1]
+                print(subtotal)
+        order_line = input('> ').title()
+
+# def order_total_cost():
+
+    # while order_line != 'quit':
+    #     if order_line in menu[key][key]:
+    #         print('ordered')
+    #         # order[order_line] += 1
+    #         # print('You have added {} {} to your order'.format(order[order_line], order_line))
+    #         print(order_prompt)
+    #     else:
+    #         print('Please enter a valid menu item')
+    #         print(order_prompt)
 
     # return order_line
-
-#
 
 
 if __name__ == '__main__':
