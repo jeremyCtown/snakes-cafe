@@ -54,12 +54,13 @@ order = {
 }
 
 order_line = input('> ')
-print(order_line)
 
-if order_line in order:
-    order[order_line] += 1
-    print('You have added {} {} to your order'.format(order[order_line], order_line))
-    print('Test')
-else:
-    print('Please enter a valid menu item')
-    order_line
+while order_line != 'quit':
+    if order_line in order:
+        order[order_line] += 1
+        print('You have added {} {} to your order'.format(order[order_line], order_line))
+        order_line = input('> ')
+    else:
+        print('Please enter a valid menu item')
+        order_line = input('> ')
+
