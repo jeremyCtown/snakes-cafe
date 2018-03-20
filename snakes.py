@@ -1,16 +1,14 @@
-"""
-command line menu program
-"""
-intro = '''
+
+intro = """
 **************************************
 **    Welcome to the Snakes Cafe!   **
 **    Please see our menu below.    **
 **
 ** To quit at any time, type "quit" **
 **************************************
-'''
+"""
 
-order_prompt = '''
+order_prompt = """
 **********************************************************************
 ** What would you like to order?                                    **
 ** To add an item to your order, type the item name                 **
@@ -18,7 +16,7 @@ order_prompt = '''
 ** To see your current order, type "order"                          **
 ** To quit at any time, type "quit"                                 **
 **********************************************************************
-\n'''
+\n"""
 
 menu = {
     'Appetizers': {
@@ -65,11 +63,9 @@ menu = {
 
 order_line = ''
 subtotal = 0
+print(subtotal)
 
 def print_menu():
-    """
-    prints the restaurant menu
-    """
     print('Menu:\n')
     for key, value in menu.items():
         print(key)
@@ -78,10 +74,7 @@ def print_menu():
         print()
 
 
-def input_item(subtotal):
-    """
-    user inputs item to order
-    """
+def input_item():
     print(subtotal)
     order_line = input('> ').title()
     if order_line == 'Quit':
@@ -98,7 +91,6 @@ def input_item(subtotal):
                 subtotal += value[order_line][1]
                 print(subtotal)
         order_line = input('> ').title()
-    return subtotal
 
 # def order_total_cost():
 
@@ -119,4 +111,4 @@ if __name__ == '__main__':
     print(intro)
     print_menu()
     print(order_prompt)
-    subtotal = input_item(subtotal)
+    input_item()
