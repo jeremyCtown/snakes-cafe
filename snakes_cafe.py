@@ -35,8 +35,6 @@ Blood of the Innocent
 ** What would you like to order? **
 ***********************************"""
 
-print(menu)
-
 order = {
     'Wings': 0,
     'Cookies': 0,
@@ -53,6 +51,8 @@ order = {
     'Blood of the Innocent': 0
 }
 
+print(menu)
+
 order_line = input('> ')
 
 while order_line != 'quit':
@@ -63,4 +63,3 @@ while order_line != 'quit':
     else:
         print('Please enter a valid menu item')
         order_line = input('> ')
-
