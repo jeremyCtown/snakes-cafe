@@ -78,11 +78,11 @@ def print_menu():
         print()
 
 
-def input_item(subtotal):
+def input_item():
     """
     user inputs item to order
     """
-    print(subtotal)
+    global subtotal
     order_line = input('> ').title()
     if order_line == 'Quit':
         print('Bye!')
@@ -98,7 +98,7 @@ def input_item(subtotal):
                 subtotal += value[order_line][1]
                 print(subtotal)
         order_line = input('> ').title()
-    return subtotal
+    # return subtotal
 
 # def order_total_cost():
 
@@ -119,4 +119,5 @@ if __name__ == '__main__':
     print(intro)
     print_menu()
     print(order_prompt)
-    subtotal = input_item(subtotal)
+    # subtotal = input_item(subtotal)
+    input_item()
