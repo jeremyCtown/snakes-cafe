@@ -6,34 +6,53 @@ menu = """**************************************
 ** To quit at any time, type "quit" **
 **************************************
 
-Appetizers
-----------
-Wings
-Cookies
-Spring Rolls
-
-Entrees
--------
-Salmon
-Steak
-Meat Tornado
-A Literal Garden
-
-Desserts
---------
-Ice Cream
-Cake
-Pie
-
-Drinks
-------
-Coffee
-Tea
-Blood of the Innocent
 
 ***********************************
 ** What would you like to order? **
 ***********************************"""
+
+menu = {
+    'Appetizers': {
+        'Wings': [0, 2.00],
+        'Calamari': [0, 2.00],
+        'Spring Rolls': [0, 2.00],
+        'Nachos': [0, 2.00],
+        'Spinach Dip': [0, 2.00],
+        'Sampler': [0, 2.00]
+    },
+    'Entrees': {
+        'Salmon': [0, 10.00],
+        'Steak': [0, 10.00],
+        'Tacos': [0, 10.00],
+        'Salad': [0, 10.00],
+        'Pizza': [0, 10.00],
+        'Vegatarian Option': [0, 10.00]
+    },
+    'Sides': {
+        'French Fries': [0, 4.00],
+        'Hush Puppies': [0, 4.00],
+        'Green Beans': [0, 4.00],
+        'Mashed Potatoes': [0, 4.00],
+        'Corn': [0, 4.00],
+        'Rolls': [0, 4.00]
+    },
+    'Desserts': {
+        'Ice Cream': [0, 5.00],
+        'Cake': [0, 5.00],
+        'Pie': [0, 5.00],
+        'Cookies': [0, 5.00],
+        'Cheese': [0, 5.00],
+        'Boozy Milkshake': [0, 5.00]
+    },
+    'Drinks': {
+        'Coffee': [0, 3.00],
+        'Tea': [0, 3.00],
+        'Milk': [0, 3.00],
+        'Soda': [0, 3.00],
+        'Juice': [0, 3.00],
+        'Water': [0, 3.00]
+    }
+}
 
 order = {
     'Wings': 0,
@@ -63,3 +82,5 @@ while order_line != 'quit':
     else:
         print('Please enter a valid menu item')
         order_line = input('> ')
+
+if __name__ == '__main__':
