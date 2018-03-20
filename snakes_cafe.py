@@ -61,17 +61,35 @@ menu = {
     }
 }
 
+order_line = ''
 
+def print_menu():
+    print('Menu:\n')
+    for key, value in menu.items():
+        print(key)
+        for k, v in value.items():
+            print(k, v[1])
+        print()
 
-order_line = input('> ')
+def input_item():
+    order_line = input('> ').title()
+    while order_line != 'quit':
+        if order_line in menu.items():
+            print('ordered')
+            # order[order_line] += 1
+            # print('You have added {} {} to your order'.format(order[order_line], order_line))
+            # order_line = input('> ')
+        else:
+            print('Please enter a valid menu item')
+            order_line = input('> ')
 
-while order_line != 'quit':
-    if order_line in order:
-        order[order_line] += 1
-        print('You have added {} {} to your order'.format(order[order_line], order_line))
-        order_line = input('> ')
-    else:
-        print('Please enter a valid menu item')
-        order_line = input('> ')
+    # return order_line
+
+#
+
 
 if __name__ == '__main__':
+    print(intro)
+    print_menu()
+    print(order_prompt)
+    input_item()
