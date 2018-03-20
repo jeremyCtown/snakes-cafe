@@ -84,20 +84,25 @@ def input_item():
     """
     global subtotal
     order_line = input('> ').title()
-    if order_line == 'Quit':
-        print('Bye!')
-        quit()
-    elif order_line == 'Order':
-        print('yes')
-        # TODO  print order
+    while order_line != 'Quit':
+    # if order_line == 'Quit':
+    #     print('Bye!')
+    #     quit()
+        if order_line == 'Order':
+            print('yes')
+            # TODO  print order
+        elif order_line == 'Remove'
+        else:
+            for key, value in menu.items():
+                if order_line in value.keys():
+                    value[order_line][0] += 1
+                    subtotal += value[order_line][1]
+                    print(subtotal)
+                else:
+                    print('Please enter a valid menu item')
         order_line = input('> ').title()
-    else:
-        for key, value in menu.items():
-            if order_line in value.keys():
-                value[order_line][0] += 1
-                subtotal += value[order_line][1]
-                print(subtotal)
-        order_line = input('> ').title()
+    print('Thank you for your order!')
+    quit()
     # return subtotal
 
 # def order_total_cost():
