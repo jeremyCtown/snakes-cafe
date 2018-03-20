@@ -1,15 +1,22 @@
 
-menu = """**************************************
+intro = """
+**************************************
 **    Welcome to the Snakes Cafe!   **
 **    Please see our menu below.    **
 **
 ** To quit at any time, type "quit" **
 **************************************
+"""
 
-
-***********************************
-** What would you like to order? **
-***********************************"""
+order_prompt = """
+**********************************************************************
+** What would you like to order?                                    **
+** To add an item to your order, type the item name                 **
+** To remove an item from your order, type the "remove <item name>" **
+** To see your current order, type "order"                          **
+** To quit at any time, type "quit"                                 **
+**********************************************************************
+\n"""
 
 menu = {
     'Appetizers': {
@@ -54,23 +61,7 @@ menu = {
     }
 }
 
-order = {
-    'Wings': 0,
-    'Cookies': 0,
-    'Spring Rolls': 0,
-    'Salmon': 0,
-    'Steak': 0,
-    'Meat Tornado': 0,
-    'A Literal Garden': 0,
-    'Ice Cream': 0,
-    'Cake': 0,
-    'Pie': 0,
-    'Coffee': 0,
-    'Tea': 0,
-    'Blood of the Innocent': 0
-}
 
-print(menu)
 
 order_line = input('> ')
 
