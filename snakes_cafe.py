@@ -81,15 +81,36 @@ def print_menu():
         print()
 
 
-def printOrder():
+def print_order():
     """
     provides print out of user order
     """
-    print('yes')
+    print(
+    '''*************************
+The Snakes Cafe
+
+Order #1234
+=========================
+    ''')
+
+    for key, value in menu.items():
+        for k, v in value.items():
+            if v[0] != 0:
+                item = '{} x{}'.format(k, v[0])
+                print(item, '${:.2f}'.format(v[0] * v[1]).rjust(25-len(item)))
+
+
+            # print(k, '{:.2f}'.format(v[1]).rjust(25-len(k)))
+        print()
+
+    print(
+    '''*************************
+    '''
+    )
     # TODO  print order
 
 
-def removeItem(order_line):
+def remove_item(order_line):
     """
     removes item from user order
     """
@@ -105,7 +126,7 @@ def removeItem(order_line):
         print('Please remove a valid menu item')
 
 
-def printCategory(order_line):
+def print_category(order_line):
     """
     prints category
     """
@@ -114,7 +135,7 @@ def printCategory(order_line):
         print(key, '{:.2f}'.format(value[1]).rjust(25-len(key)))
 
 
-def addToOrder(order_line):
+def add_to_order(order_line):
     """
     adds items to user order
     """
@@ -138,12 +159,13 @@ def input_item():
     order_line = input('> ').title()
     while order_line != 'Quit':
         if order_line == 'Order':
-            printOrder()
-            removeItem(order_line)
+            print_order()
+        elif 'Remove' in order_line:
+            remove_item(order_line)
         elif order_line in menu:
-            printCategory(order_line)
+            print_category(order_line)
         else:
-            addToOrder(order_line)
+            add_to_order(order_line)
         order_line = input('> ').title()
     print('Thank you for your order!')
     quit()
