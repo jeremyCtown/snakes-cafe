@@ -76,12 +76,25 @@ def print_menu():
     """
     prints the restaurant menu
     """
-    print('Menu:')
+    menu_string = 'Menu:'
     for key, value in menu.items():
-        print('\n' + key + '\n')
+        menu_string += '\n' + key + '\n\n'
         for k, v in value.items():
-            print(k, '{:.2f}'.format(v[1]).rjust(25-len(k)))
-        print()
+            menu_string += k + '{:.2f}\n'.format(v[1]).rjust(25-len(k))
+        menu_string += '\n'
+    print(menu_string)
+    return menu_string
+
+
+
+
+
+    # print('Menu:')
+    # for key, value in menu.items():
+    #     print('\n' + key + '\n')
+    #     for k, v in value.items():
+    #         print(k, '{:.2f}'.format(v[1]).rjust(25-len(k)))
+    #     print()
 
 
 def print_order():
@@ -158,6 +171,7 @@ def add_to_order(order_line):
             break
     else:
         print('Please enter a valid menu item')
+        return 'Please enter a valid menu item'
 
 
 def input_item():
