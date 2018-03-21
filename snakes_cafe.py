@@ -35,7 +35,7 @@ menu = {
         'Tacos': [0, 10.00],
         'Salad': [0, 10.00],
         'Pizza': [0, 10.00],
-        'Vegatarian Option': [0, 10.00]
+        'Vegetarian Option': [0, 10.00]
     },
     'Sides': {
         'French Fries': [0, 4.00],
@@ -65,17 +65,58 @@ menu = {
 
 order_line = ''
 subtotal = 0
+taxes = str(subtotal * 0.101)
+total = str(subtotal * 1.101)
+
 
 def print_menu():
     """
     prints the restaurant menu
     """
-    print('Menu:\n')
+    print('Menu:')
     for key, value in menu.items():
-        print(key)
+        print('\n' + key + '\n')
         for k, v in value.items():
-            print(k, v[1])
+            # print(k, v[1])
+            print(k, '{:.2f}'.format(v[1]).rjust(25-len(k)))
         print()
+
+
+def printOrder():
+    print('yes')
+    # TODO  print order
+
+
+def removeItem(order_line):
+    global subtotal
+    order_line = order_line.replace('Remove ', '')
+    for key, value in menu.items():
+        if order_line in value.keys():
+            value[order_line][0] -= 1
+            subtotal -= value[order_line][1]
+            print(order_line + ' has been removed. Your total is ${:.2f}'.format(subtotal * 1.101))
+            break
+    else:
+        print('Please remove a valid menu item')
+
+
+def printCategory(order_line):
+    print('\n' + order_line + '\n')
+    for key, value in menu[order_line].items():
+        print(key, '{:.2f}'.format(value[1]).rjust(25-len(key)))
+
+
+def addToOrder(order_line):
+    print(order_line)
+    global subtotal
+    for key, value in menu.items():
+        if order_line in value.keys():
+            value[order_line][0] += 1
+            subtotal += value[order_line][1]
+            print(order_line + ' has been added. Your total is ${:.2f}'.format(subtotal * 1.101))
+            break
+    else:
+        print('Please enter a valid menu item')
 
 
 def input_item():
@@ -85,44 +126,42 @@ def input_item():
     global subtotal
     order_line = input('> ').title()
     while order_line != 'Quit':
-    # if order_line == 'Quit':
-    #     print('Bye!')
-    #     quit()
         if order_line == 'Order':
-            print('yes')
-            # TODO  print order
-        elif order_line == 'Remove'
+            printOrder()
+        elif 'Remove' in order_line:
+            # order_line = order_line.replace('Remove ', '')
+            removeItem(order_line)
+            # for key, value in menu.items():
+            #     if order_line in value.keys():
+            #         value[order_line][0] -= 1
+            #         subtotal -= value[order_line][1]
+            #         print(order_line + ' has been removed. Your total is ${:.2f}'.format(subtotal * 1.101))
+            #         break
+            # else:
+            #     print('Please remove a valid menu item')
+        elif order_line in menu:
+            # printCategory()
+            print('\n' + order_line + '\n')
+            for key, value in menu[order_line].items():
+                print(key, '{:.2f}'.format(value[1]).rjust(25-len(key)))
         else:
-            for key, value in menu.items():
-                if order_line in value.keys():
-                    value[order_line][0] += 1
-                    subtotal += value[order_line][1]
-                    print(subtotal)
-                else:
-                    print('Please enter a valid menu item')
+            addToOrder(order_line)
+            # global subtotal
+            # for key, value in menu.items():
+            #     if order_line in value.keys():
+            #         value[order_line][0] += 1
+            #         subtotal += value[order_line][1]
+            #         print(order_line + ' has been added. Your total is ${:.2f}'.format(subtotal * 1.101))
+            #         break
+            # else:
+            #     print('Please enter a valid menu item')
         order_line = input('> ').title()
     print('Thank you for your order!')
     quit()
-    # return subtotal
-
-# def order_total_cost():
-
-    # while order_line != 'quit':
-    #     if order_line in menu[key][key]:
-    #         print('ordered')
-    #         # order[order_line] += 1
-    #         # print('You have added {} {} to your order'.format(order[order_line], order_line))
-    #         print(order_prompt)
-    #     else:
-    #         print('Please enter a valid menu item')
-    #         print(order_prompt)
-
-    # return order_line
 
 
 if __name__ == '__main__':
     print(intro)
     print_menu()
     print(order_prompt)
-    # subtotal = input_item(subtotal)
     input_item()
