@@ -17,6 +17,7 @@ order_prompt = '''
 **********************************************************************
 ** What would you like to order?                                    **
 ** To add an item to your order, type the item name                 **
+** To see the menu, type "menu"                                     **
 ** To remove an item from your order, type the "remove <item name>" **
 ** To see your current order, type "order"                          **
 ** To quit at any time, type "quit"                                 **
@@ -68,8 +69,6 @@ menu = {
 
 order_line = ''
 subtotal = 0
-# taxes = str(subtotal * 0.101)
-# total = str(subtotal * 1.101)
 
 
 def print_menu():
@@ -113,11 +112,8 @@ Order #{}
     print('-----------------------------------------------')
     print('Total Due', '${:.2f}'.format(subtotal * 1.101).rjust(46 - 9))
 
-    print(
-    '''***********************************************
-    '''
+    print('***********************************************'
     )
-    # TODO  print order
 
 
 def remove_item(order_line):
@@ -140,10 +136,17 @@ def print_category(order_line):
     """
     prints category
     """
-    print('\n' + order_line + '\n')
+    category_string = '\n' + order_line + '\n'
     for key, value in menu[order_line].items():
-        print(key, '{:.2f}'.format(value[1]).rjust(25-len(key)))
-    print()
+        category_string += key + '{:.2f}'.format(value[1]).rjust(25-len(key)) + '\n'
+    # category_string += '\n'
+    print(category_string)
+    return category_string
+
+    # print('\n' + order_line + '\n')
+    # for key, value in menu[order_line].items():
+    #     print(key, '{:.2f}'.format(value[1]).rjust(25-len(key)))
+    # print()
 
 
 def add_to_order(order_line):

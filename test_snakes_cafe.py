@@ -1,7 +1,11 @@
 import pytest
 import snakes_cafe
 
+
 def test_print_menu():
+    '''
+    test the print menu function
+    '''
     assert snakes_cafe.print_menu() == '''Menu:
 Appetizers
 
@@ -52,16 +56,38 @@ Soda                3.00
 Juice               3.00
 Evian               1.00\n\n'''
 
+
 def test_print_order():
+    '''
+    test if current order prints
+    '''
     assert snakes_cafe.print_order
 
+
 def test_remove_item():
+    '''
+    test that you are removing an item
+    '''
     assert snakes_cafe.remove_item
 
+
 def test_print_category():
-    assert snakes_cafe.print_category
+    '''
+    test that a category is printed
+    '''
+    assert snakes_cafe.print_category('Appetizers') == '''\nAppetizers
+Wings                2.00
+Calamari             2.00
+Spring Rolls         2.00
+Nachos               2.00
+Spinach Dip          2.00
+Sampler              2.00\n'''
+
 
 def test_add_to_order():
+    '''
+    test that an item gets added to order
+    '''
     assert snakes_cafe.add_to_order('wangs') == 'Please enter a valid menu item'
 
 # def test_input_item - not needed at this time, relies on user input
