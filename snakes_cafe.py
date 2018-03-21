@@ -174,6 +174,8 @@ def input_item():
             print_order()
         elif 'Remove' in order_line:
             remove_item(order_line)
+        elif order_line == 'Menu'
+
         elif order_line in menu:
             print_category(order_line)
         else:
