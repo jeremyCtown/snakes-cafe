@@ -139,14 +139,8 @@ def print_category(order_line):
     category_string = '\n' + order_line + '\n'
     for key, value in menu[order_line].items():
         category_string += key + '{:.2f}'.format(value[1]).rjust(25-len(key)) + '\n'
-    # category_string += '\n'
     print(category_string)
     return category_string
-
-    # print('\n' + order_line + '\n')
-    # for key, value in menu[order_line].items():
-    #     print(key, '{:.2f}'.format(value[1]).rjust(25-len(key)))
-    # print()
 
 
 def add_to_order(order_line):

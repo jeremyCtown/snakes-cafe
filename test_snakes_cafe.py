@@ -68,7 +68,9 @@ def test_remove_item():
     '''
     test that you are removing an item
     '''
-    assert snakes_cafe.remove_item
+    snakes_cafe.add_to_order('Wings')
+    snakes_cafe.remove_item('Wings')
+    assert snakes_cafe.menu['Appetizers']['Wings'][0] == 0
 
 
 def test_print_category():
@@ -88,6 +90,9 @@ def test_add_to_order():
     '''
     test that an item gets added to order
     '''
+    snakes_cafe.add_to_order('Wings')
+    assert snakes_cafe.menu['Appetizers']['Wings'][0] == 1
     assert snakes_cafe.add_to_order('wangs') == 'Please enter a valid menu item'
+
 
 # def test_input_item - not needed at this time, relies on user input
