@@ -89,31 +89,30 @@ def print_order():
     """
     provides print out of user order
     """
-    print(
-    '''\n***********************************************
+
+    order_string = '''\n***********************************************
 The Snakes Cafe
 Seattle, WA
 
 Order #{}
-===============================================\n'''.format(uuid.uuid4()))
+===============================================\n'''.format(uuid.uuid4())
 
     for key, value in menu.items():
         for k, v in value.items():
             if v[0] != 0:
                 item = '{} x{}'.format(k, v[0])
-                print(item, '${:.2f}'.format(v[0] * v[1]).rjust(46-len(item)))
-    print()
+                order_string += item + '${:.2f}'.format(v[0] * v[1]).rjust(46-len(item)) + '\n'
 
-    print('-----------------------------------------------')
+    order_string += '\n-----------------------------------------------' + '\n'
+    order_string += 'Subtotal' + '${:.2f}'.format(subtotal).rjust(46 - 8) + '\n'
+    order_string += 'Sales Tax' + '${:.2f}'.format(subtotal * 0.101).rjust(46 - 9) + '\n'
+    order_string += '-----------------------------------------------' + '\n'
+    order_string += 'Total Due' + '${:.2f}'.format(subtotal * 1.101).rjust(46 - 9) + '\n'
 
-    print('Subtotal', '${:.2f}'.format(subtotal).rjust(46 - 8))
+    order_string += '***********************************************' + '\n'
 
-    print('Sales Tax', '${:.2f}'.format(subtotal * 0.101).rjust(46 - 9))
-    print('-----------------------------------------------')
-    print('Total Due', '${:.2f}'.format(subtotal * 1.101).rjust(46 - 9))
-
-    print('***********************************************'
-    )
+    print(order_string)
+    return order_string
 
 
 def remove_item(order_line):

@@ -61,7 +61,8 @@ def test_print_order():
     '''
     test if current order prints
     '''
-    assert snakes_cafe.print_order
+    snakes_cafe.add_to_order('Cheese')
+    assert 'Total Due                                $5.50' in snakes_cafe.print_order()
 
 
 def test_remove_item():
