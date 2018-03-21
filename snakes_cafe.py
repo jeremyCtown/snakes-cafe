@@ -26,44 +26,59 @@ order_prompt = '''
 
 menu = {
     'Appetizers': {
-        'Wings': [0, 2.00],
-        'Calamari': [0, 2.00],
-        'Spring Rolls': [0, 2.00],
-        'Nachos': [0, 2.00],
-        'Spinach Dip': [0, 2.00],
-        'Sampler': [0, 2.00]
+        'Wings': [0, 2.00, 10],
+        'Calamari': [0, 2.00, 10],
+        'Spring Rolls': [0, 2.00, 10],
+        'Nachos': [0, 2.00, 10],
+        'Spinach Dip': [0, 2.00, 10],
+        'Sampler': [0, 2.00, 10],
+        'Mozz Sticks': [0, 2.00, 10],
+        'Corn Doggies': [0, 2.00, 10],
+        'Hummus': [0, 2.00, 10]
     },
     'Entrees': {
-        'Salmon': [0, 10.00],
-        'Steak': [0, 10.00],
-        'Tacos': [0, 10.00],
-        'Salad': [0, 10.00],
-        'Pizza': [0, 10.00],
-        'Vegetarian Option': [0, 10.00]
+        'Salmon': [0, 10.00, 10],
+        'Steak': [0, 10.00, 10],
+        'Tacos': [0, 10.00, 10],
+        'Salad': [0, 10.00, 10],
+        'Pizza': [0, 10.00, 10],
+        'Vegetarian Option': [0, 10.00, 10],
+        'Pasta': [0, 10.00, 10],
+        'Ribs': [0, 10.00, 10],
+        'Burrito': [0, 10.00, 10]
     },
     'Sides': {
-        'French Fries': [0, 4.00],
-        'Hush Puppies': [0, 4.00],
-        'Green Beans': [0, 4.00],
-        'Mashed Potatoes': [0, 4.00],
-        'Corn': [0, 4.00],
-        'Rolls': [0, 4.00]
+        'French Fries': [0, 4.00, 10],
+        'Hush Puppies': [0, 4.00, 10],
+        'Green Beans': [0, 4.00, 10],
+        'Mashed Potatoes': [0, 4.00, 10],
+        'Corn': [0, 4.00, 10],
+        'Rolls': [0, 4.00, 10],
+        'Carrots': [0, 4.00, 10],
+        'Biscuits': [0, 4.00, 10],
+        'Mac and Cheese': [0, 4.00, 10]
     },
     'Desserts': {
-        'Ice Cream': [0, 5.00],
-        'Cake': [0, 5.00],
-        'Pie': [0, 5.00],
-        'Cookies': [0, 5.00],
-        'Cheese': [0, 5.00],
-        'Boozy Milkshake': [0, 5.00]
+        'Ice Cream': [0, 5.00, 10],
+        'Cake': [0, 5.00, 10],
+        'Pie': [0, 5.00, 10],
+        'Cookies': [0, 5.00, 10],
+        'Cheese': [0, 5.00, 10],
+        'Boozy Milkshake': [0, 5.00, 10],
+        'Sundae': [0, 5.00, 10],
+        'Gummi Bears': [0, 5.00, 10],
+        'Brownie': [0, 5.00, 10]
     },
     'Drinks': {
-        'Coffee': [0, 3.00],
-        'Tea': [0, 3.00],
-        'Beer': [0, 5.50],
-        'Soda': [0, 3.00],
-        'Juice': [0, 3.00],
-        'Evian': [0, 1.00]
+        'Coffee': [0, 3.00, 10],
+        'Tea': [0, 3.00, 10],
+        'Beer': [0, 5.50, 10],
+        'Soda': [0, 3.00, 10],
+        'Juice': [0, 3.00, 10],
+        'Evian': [0, 1.00, 10],
+        'Wine': [0, 5.50, 10],
+        'Hunch Punch': [0, 5.50, 10],
+        'Seltzer': [0, 1.00, 10]
     }
 }
 
@@ -123,12 +138,13 @@ def remove_item(order_line):
     order_line = order_line.replace('Remove ', '')
     for key, value in menu.items():
         if order_line in value.keys():
-            value[order_line][0] -= 1
-            subtotal -= value[order_line][1]
-            print(order_line + ' has been removed. Your total is ${:.2f}'.format(subtotal * 1.101))
-            break
+            if value[order_line][0] > 0:
+                value[order_line][0] -= 1
+                subtotal -= value[order_line][1]
+                print(order_line + ' has been removed. Your total is ${:.2f}'.format(subtotal * 1.101))
+                break
     else:
-        print('Please remove a valid menu item')
+        print(order_line + ' is not in your order. Please remove a valid item')
 
 
 def print_category(order_line):
@@ -146,12 +162,19 @@ def add_to_order(order_line):
     """
     adds items to user order
     """
-    print(order_line)
+    # print(order_line)
     global subtotal
     for key, value in menu.items():
         if order_line in value.keys():
-            value[order_line][0] += 1
-            subtotal += value[order_line][1]
+            order_quantity = input('How many orders of ' + order_line + ' would you like?\n> ')
+            if order_quantity != '':
+                if value[order_line][2] < order_quantity:
+                    print('That\'s way too many! Please order again')
+                    break
+                else:
+                    value[order_line][0] += order_quantity
+                    subtotal += value[order_line][1]
+                    value[order_line][2] -= order_quantity
             print(order_line + ' has been added. Your total is ${:.2f}'.format(subtotal * 1.101))
             break
     else:
@@ -164,7 +187,7 @@ def input_item():
     changes order according to user input
     """
     global subtotal
-    order_line = input('> ').title()
+    order_line = input('What would you like?\n> ').title()
     while order_line != 'Quit':
         if order_line == 'Order':
             print_order()
@@ -176,7 +199,7 @@ def input_item():
             print_category(order_line)
         else:
             add_to_order(order_line)
-        order_line = input('> ').title()
+        order_line = input('What would you like?\n> ').title()
     print('Thank you for your order!')
     quit()
 
