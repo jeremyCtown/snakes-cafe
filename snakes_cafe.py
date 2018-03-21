@@ -86,17 +86,6 @@ def print_menu():
     return menu_string
 
 
-
-
-
-    # print('Menu:')
-    # for key, value in menu.items():
-    #     print('\n' + key + '\n')
-    #     for k, v in value.items():
-    #         print(k, '{:.2f}'.format(v[1]).rjust(25-len(k)))
-    #     print()
-
-
 def print_order():
     """
     provides print out of user order
