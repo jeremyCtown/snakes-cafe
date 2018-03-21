@@ -1,6 +1,9 @@
 """
 command line menu program
 """
+
+import uuid
+
 intro = '''
 **************************************
 **    Welcome to the Snakes Cafe!   **
@@ -65,8 +68,8 @@ menu = {
 
 order_line = ''
 subtotal = 0
-taxes = str(subtotal * 0.101)
-total = str(subtotal * 1.101)
+# taxes = str(subtotal * 0.101)
+# total = str(subtotal * 1.101)
 
 
 def print_menu():
@@ -86,25 +89,30 @@ def print_order():
     provides print out of user order
     """
     print(
-    '''*************************
+    '''\n***********************************************
 The Snakes Cafe
+Seattle, WA
 
-Order #1234
-=========================
-    ''')
+Order #{}
+===============================================\n'''.format(uuid.uuid4()))
 
     for key, value in menu.items():
         for k, v in value.items():
             if v[0] != 0:
                 item = '{} x{}'.format(k, v[0])
-                print(item, '${:.2f}'.format(v[0] * v[1]).rjust(25-len(item)))
+                print(item, '${:.2f}'.format(v[0] * v[1]).rjust(46-len(item)))
+    print()
 
+    print('-----------------------------------------------')
 
-            # print(k, '{:.2f}'.format(v[1]).rjust(25-len(k)))
-        print()
+    print('Subtotal', '${:.2f}'.format(subtotal).rjust(46 - 8))
+
+    print('Sales Tax', '${:.2f}'.format(subtotal * 0.101).rjust(46 - 9))
+    print('-----------------------------------------------')
+    print('Total Due', '${:.2f}'.format(subtotal * 1.101).rjust(46 - 9))
 
     print(
-    '''*************************
+    '''***********************************************
     '''
     )
     # TODO  print order
@@ -133,6 +141,7 @@ def print_category(order_line):
     print('\n' + order_line + '\n')
     for key, value in menu[order_line].items():
         print(key, '{:.2f}'.format(value[1]).rjust(25-len(key)))
+    print()
 
 
 def add_to_order(order_line):
