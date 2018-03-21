@@ -17,6 +17,7 @@ order_prompt = '''
 **********************************************************************
 ** What would you like to order?                                    **
 ** To add an item to your order, type the item name                 **
+** To see the menu, type "menu"                                     **
 ** To remove an item from your order, type the "remove <item name>" **
 ** To see your current order, type "order"                          **
 ** To quit at any time, type "quit"                                 **
@@ -68,8 +69,6 @@ menu = {
 
 order_line = ''
 subtotal = 0
-# taxes = str(subtotal * 0.101)
-# total = str(subtotal * 1.101)
 
 
 def print_menu():
@@ -90,34 +89,30 @@ def print_order():
     """
     provides print out of user order
     """
-    print(
-    '''\n***********************************************
+
+    order_string = '''\n***********************************************
 The Snakes Cafe
 Seattle, WA
 
 Order #{}
-===============================================\n'''.format(uuid.uuid4()))
+===============================================\n'''.format(uuid.uuid4())
 
     for key, value in menu.items():
         for k, v in value.items():
             if v[0] != 0:
                 item = '{} x{}'.format(k, v[0])
-                print(item, '${:.2f}'.format(v[0] * v[1]).rjust(46-len(item)))
-    print()
+                order_string += item + '${:.2f}'.format(v[0] * v[1]).rjust(46-len(item)) + '\n'
 
-    print('-----------------------------------------------')
+    order_string += '\n-----------------------------------------------' + '\n'
+    order_string += 'Subtotal' + '${:.2f}'.format(subtotal).rjust(46 - 8) + '\n'
+    order_string += 'Sales Tax' + '${:.2f}'.format(subtotal * 0.101).rjust(46 - 9) + '\n'
+    order_string += '-----------------------------------------------' + '\n'
+    order_string += 'Total Due' + '${:.2f}'.format(subtotal * 1.101).rjust(46 - 9) + '\n'
 
-    print('Subtotal', '${:.2f}'.format(subtotal).rjust(46 - 8))
+    order_string += '***********************************************' + '\n'
 
-    print('Sales Tax', '${:.2f}'.format(subtotal * 0.101).rjust(46 - 9))
-    print('-----------------------------------------------')
-    print('Total Due', '${:.2f}'.format(subtotal * 1.101).rjust(46 - 9))
-
-    print(
-    '''***********************************************
-    '''
-    )
-    # TODO  print order
+    print(order_string)
+    return order_string
 
 
 def remove_item(order_line):
@@ -140,10 +135,11 @@ def print_category(order_line):
     """
     prints category
     """
-    print('\n' + order_line + '\n')
+    category_string = '\n' + order_line + '\n'
     for key, value in menu[order_line].items():
-        print(key, '{:.2f}'.format(value[1]).rjust(25-len(key)))
-    print()
+        category_string += key + '{:.2f}'.format(value[1]).rjust(25-len(key)) + '\n'
+    print(category_string)
+    return category_string
 
 
 def add_to_order(order_line):
@@ -174,8 +170,8 @@ def input_item():
             print_order()
         elif 'Remove' in order_line:
             remove_item(order_line)
-        elif order_line == 'Menu'
-
+        elif order_line == 'Menu':
+            print_menu()
         elif order_line in menu:
             print_category(order_line)
         else:
