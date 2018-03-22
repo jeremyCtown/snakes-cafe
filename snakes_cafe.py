@@ -257,4 +257,7 @@ if __name__ == '__main__':
     print(intro)
     print_menu()
     print(order_prompt)
-    input_item()
+    try:
+        input_item()
+    except KeyboardInterrupt:
+        print('\nThanks for visiting the Snake Cafe.')
