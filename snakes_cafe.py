@@ -21,6 +21,7 @@ order_prompt = '''
 ** To remove an item from your order, type the "remove <item name>" **
 ** To see your current order, type "order"                          **
 ** To quit at any time, type "quit"                                 **
+** To order from togo menu, type "togo"                             **
 **********************************************************************
 \n'''
 
@@ -163,7 +164,6 @@ def add_to_order(order_line):
     """
     adds items to user order
     """
-    # print(order_line)
     global subtotal
     for key, value in menu.items():
         if order_line in value.keys():
@@ -200,38 +200,7 @@ def update_order_quantity(order_line, order_quantity):
                 value[order_line][0] += order_quantity
                 subtotal += value[order_line][1] * order_quantity
                 value[order_line][2] -= order_quantity
-        # print(value[order_line][2])
-    # else:
     print(order_line + ' has been added. Your total is ${:.2f}\n'.format(subtotal * 1.101))
-    # return
-    # break
-
-
-
-# def update_order_quantity(order_line):
-#     """
-#     prompts user to select quantity of item
-#     """
-#     global subtotal
-#     try:
-#         order_quantity = int(input('How many orders of ' + order_line + ' would you like?\n> '))
-#     except ValueError:
-#         print('Please enter a number between 1-'+ value[order_line][2])
-#     if order_quantity != '':
-#         if value[order_line][2] < order_quantity:
-#             print('That\'s way too many! Please order again')
-#             break
-#         else:
-#             value[order_line][0] += order_quantity
-#             subtotal += value[order_line][1]
-#             value[order_line][2] -= order_quantity
-#     # elif order_quantity is not int
-#     else:
-#         value[order_line][0] += order_quantity
-#         subtotal += value[order_line][1]
-#         value[order_line][2] -= order_quantity
-#     print(order_line + ' has been added. Your total is ${:.2f}'.format(subtotal * 1.101))
-#     break
 
 
 def input_item():
@@ -247,6 +216,8 @@ def input_item():
             remove_item(order_line)
         elif order_line == 'Menu':
             print_menu()
+        elif order_line == 'Togo':
+            optional_menu()
         elif order_line in menu:
             print_category(order_line)
         else:
@@ -254,6 +225,23 @@ def input_item():
         order_line = input('What would you like?\n> ').title()
     print('Thank you for your order!')
     quit()
+
+
+def optional_menu():
+    """
+    allow user to use their own menu
+    """
+    filename = input('Enter your menu file: ').strip()
+
+    try:
+        #edit code block below to verify menu file is csv and can be used
+        with open(filename, 'r') as f:
+            data = f.read()
+            menu = data.split(',')
+    except:
+        print('Not a valid menu file; using default menu.')
+
+    input_item()
 
 
 if __name__ == '__main__':
