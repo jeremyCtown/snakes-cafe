@@ -2,7 +2,7 @@
 command line menu program
 """
 
-import uuid
+deom uuid import uuid4
 import csv
 
 intro = '''
@@ -172,7 +172,7 @@ def add_to_order(order_line):
                 try:
                     order_quantity = int(input('How many orders of ' + order_line + ' would you like?\n> '))
                     if order_quantity > 0:
-                        update_order_quantity(order_line, order_quantity)
+                        Order.update_order_quantity(order_line, order_quantity)
                     else:
                         print('Please enter a number between 1-' + str(value[order_line][2]))
                     break
@@ -284,3 +284,60 @@ if __name__ == '__main__':
         input_item()
     except KeyboardInterrupt:
         print('\nThanks for visiting the Snake Cafe.')
+
+
+class Order:
+    """
+    new class
+    """
+    def __init__(self, one):
+        self.default
+
+
+    def __str__(self):
+        return 'Welcome to Snakes Cafe'
+
+
+    def __len__(self):
+        return
+
+    def __repr__(self):
+        print('<Order #{} | Items: {} | Total: ${:.2f}>'.format(order_number(), Order.__len__, total))
+
+
+    def order_number():
+        return uuid.uuid4()
+
+    def add_item(order_line):
+        """
+        adds items to user order
+        """
+        global subtotal
+        for key, value in menu.items():
+            if order_line in value.keys():
+                if order_quantity != 0:
+                    if value[order_line][2] < order_quantity:
+                        print('Oh no!! We only have ' + str(value[order_line][2]) + ' left. Please order again')
+                        add_to_order(order_line)
+                        return
+                    else:
+                        value[order_line][0] += order_quantity
+                        subtotal += value[order_line][1] * order_quantity
+                        value[order_line][2] -= order_quantity
+                else:
+                    value[order_line][0] += order_quantity
+                    subtotal += value[order_line][1] * order_quantity
+                    value[order_line][2] -= order_quantity
+        print(order_line + ' has been added. Your total is ${:.2f}\n'.format(subtotal * 1.101))
+
+
+    def remove_item():
+
+
+    def display_order():
+
+
+    def print_receipt():
+
+
+
