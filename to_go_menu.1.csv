@@ -1,0 +1,16 @@
+
+'Item': 'Wings', 'Category':'Appetizers', 'Price': 2.00, 'Quantity': 10
+'Item': 'Spring Rolls', 'Category':'Appetizers', 'Price': 2.00, 'Quantity': 10
+'Item': 'Mozz Sticks', 'Category':'Appetizers', 'Price': 2.00, 'Quantity': 10
+'Item': 'Tacos', 'Category': 'Entrees', 'Price': 10.00, 'Quantity': 10
+'Item': 'Pizza', 'Category': 'Entrees', 'Price': 10.00, 'Quantity': 10
+'Item': 'Vegetarian Option', 'Category': 'Entrees', 'Price': 10.00, 'Quantity': 10
+'Item': 'French Fries', 'Category': 'Sides', 'Price': 4.00, 'Quantity': 10
+'Item': 'Hush Puppies', 'Category': 'Sides', 'Price': 4.00, 'Quantity': 10
+'Item': 'Corn', 'Category': 'Sides', 'Price': 4.00, 'Quantity': 10
+'Item': 'Cookies', 'Category': 'Desserts', 'Price': 5.00, 'Quantity': 10
+'Item': 'Cake', 'Category': 'Desserts', 'Price': 5.00, 'Quantity': 10
+'Item': 'Pie', 'Category': 'Desserts', 'Price': 5.00, 'Quantity': 10
+'Item': 'Soda', 'Category': 'Drink', 'Price': 3.00, 'Quantity': 10
+'Item': 'Tea', 'Category': 'Drink', 'Price': 3.00, 'Quantity': 10
+'Item': 'Evian', 'Category': 'Drink', 'Price': 1.00, 'Quantity': 10
