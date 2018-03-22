@@ -15,6 +15,9 @@ Spring Rolls        2.00
 Nachos              2.00
 Spinach Dip         2.00
 Sampler             2.00
+Mozz Sticks         2.00
+Corn Doggies        2.00
+Hummus              2.00
 
 
 Entrees
@@ -25,6 +28,9 @@ Tacos              10.00
 Salad              10.00
 Pizza              10.00
 Vegetarian Option  10.00
+Pasta              10.00
+Ribs               10.00
+Burrito            10.00
 
 
 Sides
@@ -35,6 +41,9 @@ Green Beans         4.00
 Mashed Potatoes     4.00
 Corn                4.00
 Rolls               4.00
+Carrots             4.00
+Biscuits            4.00
+Mac and Cheese      4.00
 
 
 Desserts
@@ -45,6 +54,9 @@ Pie                 5.00
 Cookies             5.00
 Cheese              5.00
 Boozy Milkshake     5.00
+Sundae              5.00
+Gummi Bears         5.00
+Brownie             5.00
 
 
 Drinks
@@ -54,22 +66,24 @@ Tea                 3.00
 Beer                5.50
 Soda                3.00
 Juice               3.00
-Evian               1.00\n\n'''
+Evian               1.00
+Wine                5.50
+Hunch Punch         5.50
+Seltzer             1.00\n\n'''
 
 
 def test_print_order():
     '''
     test if current order prints
     '''
-    snakes_cafe.add_to_order('Cheese')
-    assert 'Total Due                                $5.50' in snakes_cafe.print_order()
+    assert 'Total Due' in snakes_cafe.print_order()
 
 
 def test_remove_item():
     '''
     test that you are removing an item
     '''
-    snakes_cafe.add_to_order('Wings')
+    snakes_cafe.menu['Appetizers']['Wings'][0] == 1
     snakes_cafe.remove_item('Wings')
     assert snakes_cafe.menu['Appetizers']['Wings'][0] == 0
 
@@ -84,15 +98,16 @@ Calamari             2.00
 Spring Rolls         2.00
 Nachos               2.00
 Spinach Dip          2.00
-Sampler              2.00\n'''
+Sampler              2.00
+Mozz Sticks          2.00
+Corn Doggies         2.00
+Hummus               2.00\n'''
 
 
 def test_add_to_order():
     '''
     test that an item gets added to order
     '''
-    snakes_cafe.add_to_order('Wings')
-    assert snakes_cafe.menu['Appetizers']['Wings'][0] == 1
     assert snakes_cafe.add_to_order('wangs') == 'Please enter a valid menu item'
 
 
