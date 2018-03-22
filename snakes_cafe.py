@@ -166,32 +166,69 @@ def add_to_order(order_line):
     global subtotal
     for key, value in menu.items():
         if order_line in value.keys():
-            update_order_quantity()
+            while True:
+
+                try:
+                    order_quantity = int(input('How many orders of ' + order_line + ' would you like?\n> '))
+                    update_order_quantity(order_line, order_quantity)
+                    break
+                except ValueError:
+                    print('Please enter a number between 1-' + str(value[order_line][2]))
+        break
     else:
         print('Please enter a valid menu item')
         return 'Please enter a valid menu item'
 
-def update_order_quantity():
-    """
-    prompts user to select quantity of item
-    """
+
+def update_order_quantity(order_line, order_quantity):
+    print(order_quantity)
     global subtotal
-    order_quantity = int(input('How many orders of ' + order_line + ' would you like?\n> '))
-        if order_quantity != '':
-            if value[order_line][2] < order_quantity:
-                print('That\'s way too many! Please order again')
-                break
+    for key, value in menu.items():
+        if order_line in value.keys():
+            if order_quantity != 0:
+                if value[order_line][2] < order_quantity:
+                    print('Oh no!! We only have ' + str(value[order_line][2]) + ' left. Please order again')
+                    add_to_order(order_line)
+                    return
+                else:
+                    value[order_line][0] += order_quantity
+                    subtotal += value[order_line][1] * order_quantity
+                    value[order_line][2] -= order_quantity
             else:
                 value[order_line][0] += order_quantity
-                subtotal += value[order_line][1]
+                subtotal += value[order_line][1] * order_quantity
                 value[order_line][2] -= order_quantity
-        elif order_quantity is not int
-        else
-            value[order_line][0] += order_quantity
-            subtotal += value[order_line][1]
-            value[order_line][2] -= order_quantity
-        print(order_line + ' has been added. Your total is ${:.2f}'.format(subtotal * 1.101))
-        break
+        # print(value[order_line][2])
+    # else:
+    print(order_line + ' has been added. Your total is ${:.2f}\n'.format(subtotal * 1.101))
+    # break
+
+
+
+# def update_order_quantity(order_line):
+#     """
+#     prompts user to select quantity of item
+#     """
+#     global subtotal
+#     try:
+#         order_quantity = int(input('How many orders of ' + order_line + ' would you like?\n> '))
+#     except ValueError:
+#         print('Please enter a number between 1-'+ value[order_line][2])
+#     if order_quantity != '':
+#         if value[order_line][2] < order_quantity:
+#             print('That\'s way too many! Please order again')
+#             break
+#         else:
+#             value[order_line][0] += order_quantity
+#             subtotal += value[order_line][1]
+#             value[order_line][2] -= order_quantity
+#     # elif order_quantity is not int
+#     else:
+#         value[order_line][0] += order_quantity
+#         subtotal += value[order_line][1]
+#         value[order_line][2] -= order_quantity
+#     print(order_line + ' has been added. Your total is ${:.2f}'.format(subtotal * 1.101))
+#     break
 
 
 def input_item():
