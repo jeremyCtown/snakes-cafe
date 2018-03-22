@@ -140,6 +140,7 @@ def remove_item(order_line):
         if order_line in value.keys():
             if value[order_line][0] > 0:
                 value[order_line][0] -= 1
+                value[order_line][2] += 1
                 subtotal -= value[order_line][1]
                 print(order_line + ' has been removed. Your total is ${:.2f}'.format(subtotal * 1.101))
                 break
@@ -167,21 +168,22 @@ def add_to_order(order_line):
     for key, value in menu.items():
         if order_line in value.keys():
             while True:
-
                 try:
                     order_quantity = int(input('How many orders of ' + order_line + ' would you like?\n> '))
-                    update_order_quantity(order_line, order_quantity)
+                    if order_quantity > 0:
+                        update_order_quantity(order_line, order_quantity)
+                    else:
+                        print('Please enter a number between 1-' + str(value[order_line][2]))
                     break
                 except ValueError:
                     print('Please enter a number between 1-' + str(value[order_line][2]))
-        break
+            break
     else:
         print('Please enter a valid menu item')
         return 'Please enter a valid menu item'
 
 
 def update_order_quantity(order_line, order_quantity):
-    print(order_quantity)
     global subtotal
     for key, value in menu.items():
         if order_line in value.keys():
@@ -201,6 +203,7 @@ def update_order_quantity(order_line, order_quantity):
         # print(value[order_line][2])
     # else:
     print(order_line + ' has been added. Your total is ${:.2f}\n'.format(subtotal * 1.101))
+    # return
     # break
 
 
