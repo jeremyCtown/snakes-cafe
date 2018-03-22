@@ -238,13 +238,42 @@ def optional_menu():
         # edit code block below to verify menu file is csv and can be used
         with open(filename) as csvfile:
             reader = csv.DictReader(csvfile)
+            unpacked = []
+            category = []
+            menu = {}
             for row in reader:
-                print(row['Item'], row['Category'], row['Price'], row['Quantity'])
+                category = [row['Category']]
+                unpacked += [[row['Item'], row['Category'], row['Price'], row['Quantity']]]
+                menu[category[0]] = ''
+
+            # for row in reader:
+            #     menu[unpacked[1]] = {unpacked[0]: [0, unpacked[2], unpacked[3]]}
+
+            print(menu)
+            print(unpacked)
+            make_menu(menu, unpacked)
+
+
+
+                # print(row['Item'], row['Category'], row['Price'], row['Quantity'])
+                # print(unpacked)
+                # menu.update({unpacked[0]: [0, unpacked[2], unpacked[3]]})
+                # if menu[unpacked[1]] not in menu:
+                #     print('test')
+                #     # menu[unpacked[1]] = {unpacked[0]: [0, unpacked[2], unpacked[3]]}
+                # print(menu)
+                # else:
+
+            # print(unpacked)
 
     except:
         print('Not a valid menu file; using default menu.')
 
     input_item()
+
+
+def make_menu(menu, unpacked):
+
 
 
 if __name__ == '__main__':
