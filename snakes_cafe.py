@@ -102,34 +102,6 @@ def print_menu():
     return menu_string
 
 
-def print_order():
-    """
-    provides print out of user order
-    """
-
-    order_string = '''\n***********************************************
-The Snakes Cafe
-Seattle, WA
-
-Order #{}
-===============================================\n'''.format(uuid.uuid4())
-
-    for key, value in menu.items():
-        for k, v in value.items():
-            if v[0] != 0:
-                item = '{} x{}'.format(k, v[0])
-                order_string += item + '${:.2f}'.format(v[0] * v[1]).rjust(46-len(item)) + '\n'
-
-    order_string += '\n-----------------------------------------------' + '\n'
-    order_string += 'Subtotal' + '${:.2f}'.format(subtotal).rjust(46 - 8) + '\n'
-    order_string += 'Sales Tax' + '${:.2f}'.format(subtotal * 0.101).rjust(46 - 9) + '\n'
-    order_string += '-----------------------------------------------' + '\n'
-    order_string += 'Total Due' + '${:.2f}'.format(subtotal * 1.101).rjust(46 - 9) + '\n'
-
-    order_string += '***********************************************' + '\n'
-
-    print(order_string)
-    return order_string
 
 
 def remove_item(order_line):
@@ -172,7 +144,7 @@ def add_to_order(order_line):
                 try:
                     order_quantity = int(input('How many orders of ' + order_line + ' would you like?\n> '))
                     if order_quantity > 0:
-                        Order.update_order_quantity(order_line, order_quantity)
+                        Order.add_item(order_line, order_quantity)
                     else:
                         print('Please enter a number between 1-' + str(value[order_line][2]))
                     break
@@ -184,26 +156,6 @@ def add_to_order(order_line):
         return 'Please enter a valid menu item'
 
 
-def update_order_quantity(order_line, order_quantity):
-    global subtotal
-    for key, value in menu.items():
-        if order_line in value.keys():
-            if order_quantity != 0:
-                if value[order_line][2] < order_quantity:
-                    print('Oh no!! We only have ' + str(value[order_line][2]) + ' left. Please order again')
-                    add_to_order(order_line)
-                    return
-                else:
-                    value[order_line][0] += order_quantity
-                    subtotal += value[order_line][1] * order_quantity
-                    value[order_line][2] -= order_quantity
-            else:
-                value[order_line][0] += order_quantity
-                subtotal += value[order_line][1] * order_quantity
-                value[order_line][2] -= order_quantity
-    print(order_line + ' has been added. Your total is ${:.2f}\n'.format(subtotal * 1.101))
-
-
 def input_item():
     """
     changes order according to user input
@@ -212,7 +164,7 @@ def input_item():
     order_line = input('What would you like?\n> ').title()
     while order_line != 'Quit':
         if order_line == 'Order':
-            print_order()
+            Order.display_order()
         elif 'Remove' in order_line:
             remove_item(order_line)
         elif order_line == 'Menu':
@@ -335,7 +287,33 @@ class Order:
 
 
     def display_order():
+        """
+        provides print out of user order
+        """
 
+        order_string = '''\n***********************************************
+    The Snakes Cafe
+    Seattle, WA
+
+    Order #{}
+    ===============================================\n'''.format(uuid.uuid4())
+
+        for key, value in menu.items():
+            for k, v in value.items():
+                if v[0] != 0:
+                    item = '{} x{}'.format(k, v[0])
+                    order_string += item + '${:.2f}'.format(v[0] * v[1]).rjust(46-len(item)) + '\n'
+
+        order_string += '\n-----------------------------------------------' + '\n'
+        order_string += 'Subtotal' + '${:.2f}'.format(subtotal).rjust(46 - 8) + '\n'
+        order_string += 'Sales Tax' + '${:.2f}'.format(subtotal * 0.101).rjust(46 - 9) + '\n'
+        order_string += '-----------------------------------------------' + '\n'
+        order_string += 'Total Due' + '${:.2f}'.format(subtotal * 1.101).rjust(46 - 9) + '\n'
+
+        order_string += '***********************************************' + '\n'
+
+        print(order_string)
+        return order_string
 
     def print_receipt():
 
