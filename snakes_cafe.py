@@ -3,6 +3,7 @@ command line menu program
 """
 
 import uuid
+import csv
 
 intro = '''
 **************************************
@@ -234,10 +235,12 @@ def optional_menu():
     filename = input('Enter your menu file: ').strip()
 
     try:
-        #edit code block below to verify menu file is csv and can be used
-        with open(filename, 'r') as f:
-            data = f.read()
-            menu = data.split(',')
+        # edit code block below to verify menu file is csv and can be used
+        with open(filename) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                print(row['Item'], row['Category'], row['Price'], row['Quantity'])
+
     except:
         print('Not a valid menu file; using default menu.')
 
@@ -252,3 +255,5 @@ if __name__ == '__main__':
         input_item()
     except KeyboardInterrupt:
         print('\nThanks for visiting the Snake Cafe.')
+
+
