@@ -102,6 +102,7 @@ full_menu = {
 
 order_line = ''
 subtotal = 0
+togo_menu = {}
 
 
 def print_menu():
@@ -110,7 +111,7 @@ def print_menu():
     """
     menu_string = 'Menu:'
     for key, value in menu.items():
-        menu_string += '\n' + key + '\n\n'
+        menu_string += '\n{}\n\n'.format(key)
         for k, v in value.items():
             menu_string += k + '${:.2f}\n'.format(v[1]).rjust(25-len(k))
         menu_string += '\n'
@@ -122,9 +123,9 @@ def print_category(order_line):
     """
     prints category
     """
-    category_string = '\n' + order_line + '\n'
+    category_string = '\n{}\n'.format(order_line)
     for key, value in menu[order_line].items():
-        category_string += key + '${:.2f}'.format(value[1]).rjust(25-len(key)) + '\n'
+        category_string += key + '${:.2f}\n'.format(value[1]).rjust(25-len(key))
     print(category_string)
     return category_string
 
@@ -152,55 +153,28 @@ def add_to_order(order_line):
         return 'Please enter a valid menu item'
 
 
-def input_item():
-    """
-    changes order according to user input
-    """
-    global subtotal
-    global menu
-    order_line = input('What would you like?\n> ').title()
-    while order_line != 'Quit':
-        if order_line == 'Order':
-            Order.display_order()
-        elif 'Remove' in order_line:
-            Order.remove_prompt(order_line)
-        elif order_line == 'Menu':
-            menu = full_menu
-            print_menu()
-        elif order_line == 'Checkout':
-            Order.print_receipt()
-        elif order_line == 'Togo':
-            optional_menu()
-        elif order_line in menu:
-            print_category(order_line)
-        else:
-            add_to_order(order_line)
-        order_line = input('What would you like?\n> ').title()
-    print('Thank you for your order!')
-    quit()
-
-
 def optional_menu():
     """
     allow user to use their own menu
     """
+    global menu
+    global togo_menu
     filename = input('Enter your menu file: ').strip()
-
     try:
         with open(filename) as csvfile:
             reader = csv.DictReader(csvfile)
             unpacked = []
             category = []
-            menu = {}
             for row in reader:
                 category = [row['Category']]
                 unpacked += [[row['Item'], row['Category'], row['Price'], row['Quantity']]]
-                menu[category[0]] = {}
+                togo_menu[category[0]] = {}
         for i in range(len(unpacked)):
-            menu[unpacked[i][1]].update({unpacked[i][0]: [0, float(unpacked[i][2]), int(unpacked[i][3])]})
+            togo_menu[unpacked[i][1]].update({unpacked[i][0]: [0, float(unpacked[i][2]), int(unpacked[i][3])]})
     except (KeyError, FileNotFoundError):
         print('Not a valid menu file; using default menu.')
 
+    menu = togo_menu
     input_item()
 
 
@@ -299,15 +273,15 @@ Order #{}
             for k, v in value.items():
                 if v[0] != 0:
                     item = '{} x{}'.format(k, v[0])
-                    order_string += item + '${:.2f}'.format(v[0] * v[1]).rjust(46-len(item)) + '\n'
+                    order_string += item + '${:.2f}\n'.format(v[0] * v[1]).rjust(46-len(item))
 
-        order_string += '\n-----------------------------------------------' + '\n'
-        order_string += 'Subtotal' + '${:.2f}'.format(subtotal).rjust(46 - 8) + '\n'
-        order_string += 'Sales Tax' + '${:.2f}'.format(subtotal * 0.101).rjust(46 - 9) + '\n'
-        order_string += '-----------------------------------------------' + '\n'
-        order_string += 'Total Due' + '${:.2f}'.format(subtotal * 1.101).rjust(46 - 9) + '\n'
+        order_string += '\n-----------------------------------------------\n'
+        order_string += 'Subtotal' + '${:.2f}\n'.format(subtotal).rjust(46 - 8)
+        order_string += 'Sales Tax' + '${:.2f}\n'.format(subtotal * 0.101).rjust(46 - 9)
+        order_string += '-----------------------------------------------\n'
+        order_string += 'Total Due' + '${:.2f}\n'.format(subtotal * 1.101).rjust(46 - 9)
 
-        order_string += '***********************************************' + '\n'
+        order_string += '***********************************************\n'
 
         print(order_string)
         print(Order.__len__)
@@ -319,6 +293,37 @@ Order #{}
         """
         with open('order-{}.txt'.format(order_id), 'w') as f:
             f.write(Order.display_order())
+
+
+def input_item():
+    """
+    changes order according to user input
+    """
+    global subtotal
+    global menu
+    order_line = input('What would you like?\n> ').title()
+    while order_line != 'Quit':
+        if order_line == 'Order':
+            Order.display_order()
+        elif 'Remove' in order_line:
+            Order.remove_prompt(order_line)
+        elif order_line == 'Menu':
+            if menu == full_menu:
+                print_menu()
+            else:
+                menu = togo_menu
+                print_menu()
+        elif order_line == 'Togo':
+            optional_menu()
+        elif order_line == 'Checkout':
+            Order.print_receipt()
+        elif order_line in menu:
+            print_category(order_line)
+        else:
+            add_to_order(order_line)
+        order_line = input('What would you like?\n> ').title()
+    print('Thank you for coming by. See you soon!')
+    quit()
 
 
 if __name__ == '__main__':
