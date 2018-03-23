@@ -2,8 +2,10 @@
 command line menu program
 """
 
-deom uuid import uuid4
+from uuid import uuid4
 import csv
+
+order_id = uuid4()
 
 intro = '''
 **************************************
@@ -169,6 +171,8 @@ def input_item():
             remove_item(order_line)
         elif order_line == 'Menu':
             print_menu()
+        elif order_line == 'Checkout':
+            Order.print_receipt()
         elif order_line == 'Togo':
             optional_menu()
         elif order_line in menu:
@@ -228,39 +232,24 @@ def optional_menu():
 #             menu[unpacked[i][1]] = {unpacked[i][0]: [0, unpacked[i][1], unpacked[i][2]]}
 #     print(menu)
 
-if __name__ == '__main__':
-    print(intro)
-    print_menu()
-    print(order_prompt)
-    try:
-        input_item()
-    except KeyboardInterrupt:
-        print('\nThanks for visiting the Snake Cafe.')
-
 
 class Order:
     """
     new class
     """
-    def __init__(self, one):
+    def __init__(self):
         self.default
-
 
     def __str__(self):
         return 'Welcome to Snakes Cafe'
 
-
     def __len__(self):
-        return
+        pass
 
     def __repr__(self):
-        print('<Order #{} | Items: {} | Total: ${:.2f}>'.format(order_number(), Order.__len__, total))
+        print('<Order #{} | Items: {} | Total: ${:.2f}>'.format(order_id, Order.__len__, subtotal * 1.101))
 
-
-    def order_number():
-        return uuid.uuid4()
-
-    def add_item(order_line):
+    def add_item(order_line, order_quantity):
         """
         adds items to user order
         """
@@ -280,23 +269,22 @@ class Order:
                     value[order_line][0] += order_quantity
                     subtotal += value[order_line][1] * order_quantity
                     value[order_line][2] -= order_quantity
-        print(order_line + ' has been added. Your total is ${:.2f}\n'.format(subtotal * 1.101))
-
+        print('{} x{} has been added. Your total is ${:.2f}\n'.format(order_line, order_quantity, subtotal * 1.101))
 
     def remove_item():
-
+        pass
 
     def display_order():
         """
-        provides print out of user order
+        provides display of user order
         """
 
         order_string = '''\n***********************************************
-    The Snakes Cafe
-    Seattle, WA
+The Snakes Cafe
+Seattle, WA
 
-    Order #{}
-    ===============================================\n'''.format(uuid.uuid4())
+Order #{}
+===============================================\n'''.format(order_id)
 
         for key, value in menu.items():
             for k, v in value.items():
@@ -316,6 +304,21 @@ class Order:
         return order_string
 
     def print_receipt():
+        """
+        creates file of and prints user order
+        """
+        with open('order-{}.txt'.format(order_id), 'w') as f:
+            f.write(Order.display_order())
+
+
+if __name__ == '__main__':
+    print(intro)
+    print_menu()
+    print(order_prompt)
+    try:
+        input_item()
+    except KeyboardInterrupt:
+        print('\nThanks for visiting the Snake Cafe.')
 
 
 
