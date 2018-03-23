@@ -27,7 +27,7 @@ order_prompt = '''
 **********************************************************************
 \n'''
 
-menu = {
+full_menu = {
     'Appetizers': {
         'Wings': [0, 2.00, 10],
         'Calamari': [0, 2.00, 10],
@@ -157,6 +157,7 @@ def input_item():
     changes order according to user input
     """
     global subtotal
+    global menu
     order_line = input('What would you like?\n> ').title()
     while order_line != 'Quit':
         if order_line == 'Order':
@@ -164,6 +165,7 @@ def input_item():
         elif 'Remove' in order_line:
             Order.remove_prompt(order_line)
         elif order_line == 'Menu':
+            menu = full_menu
             print_menu()
         elif order_line == 'Checkout':
             Order.print_receipt()
@@ -270,22 +272,41 @@ class Order:
                     value[order_line][2] -= order_quantity
         print('{} x{} has been added. Your total is ${:.2f}\n'.format(order_line, order_quantity, subtotal * 1.101))
 
-    def remove_item(order_line):
+    def remove_prompt(order_line):
         """
-        removes item from current order
+        prompts Order.remove from current order
         """
         global subtotal
         order_line = order_line.replace('Remove ', '')
         for key, value in menu.items():
             if order_line in value.keys():
-                if value[order_line][0] > 0:
-                    value[order_line][0] -= 1
-                    value[order_line][2] += 1
-                    subtotal -= value[order_line][1]
-                    print(order_line + ' has been removed. Your total is ${:.2f}'.format(subtotal * 1.101))
-                    break
-        else:
-            print(order_line + ' is not in your order. Please remove a valid item')
+                if value[order_line][0] != 0:
+                    while True:
+                        try:
+                            remove_quantity = int(input('You currently have {}x {} in your cart. Remove how many?\n>'.format(value[order_line][0], order_line)))
+                            if remove_quantity > value[order_line][0]:
+                                int(input('You only have {}x {} in your cart. Remove how many?\n>'.format(value[order_line][0], order_line)))
+                            else:
+                                Order.remove_item(order_line, remove_quantity)
+                            break
+                        except ValueError:
+                            print('Please enter a number between 1-' + str(value[order_line][0]))
+                else:
+                    print(order_line + ' is not in your order.')
+                    input_item()
+
+    def remove_item(order_line, remove_quantity):
+        """
+        removes item from current order
+        """
+        global subtotal
+        for key, value in menu.items():
+            if order_line in value.keys():
+                value[order_line][0] -= remove_quantity
+                subtotal -= value[order_line][1] * remove_quantity
+                value[order_line][2] += remove_quantity
+                print('{} x{} has been removed. Your total is ${:.2f}\n'.format(order_line, remove_quantity, subtotal * 1.101))
+                input_item()
 
     def display_order():
         """
@@ -327,6 +348,7 @@ Order #{}
 
 if __name__ == '__main__':
     print(intro)
+    menu = full_menu
     print_menu()
     print(order_prompt)
     try:

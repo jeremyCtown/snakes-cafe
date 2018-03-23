@@ -20,20 +20,22 @@ def remove_prompt(order_line):
 
 
 
-def remove_item(order_line):
+def remove_item(order_line, remove_quantity):
         """
         removes item from current order
         """
         global subtotal
         for key, value in menu.items():
             if order_line in value.keys():
-                if order_quantity != 0:
-                if value[order_line][0] > 0:
-                    value[order_line][0] -= 1
-                    value[order_line][2] += 1
-                    subtotal -= value[order_line][1]
-                    print(order_line + ' has been removed. Your total is ${:.2f}'.format(subtotal * 1.101))
-                    break
+                if remove_quantity != 0:
+                    if value[order_line][0] > 0:
+                        value[order_line][0] -= remove_quantity
+                        subtotal -= value[order_line][1]] * remove_quantity
+                        value[order_line][2] += remove_quantity
+                        print('{} x{} has been removed. Your total is ${:.2f}\n'.format(order_line, remove_quantity, subtotal * 1.101)
+                        break
+                    else:
+
         else:
             print(order_line + ' is not in your order.')
             input_item()
