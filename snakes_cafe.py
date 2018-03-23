@@ -185,7 +185,6 @@ def optional_menu():
     filename = input('Enter your menu file: ').strip()
 
     try:
-        # edit code block below to verify menu file is csv and can be used
         with open(filename) as csvfile:
             reader = csv.DictReader(csvfile)
             unpacked = []
@@ -194,37 +193,13 @@ def optional_menu():
             for row in reader:
                 category = [row['Category']]
                 unpacked += [[row['Item'], row['Category'], row['Price'], row['Quantity']]]
-                menu[category[0]] = ''
-
-            # for row in reader:
-            #     menu[unpacked[1]] = {unpacked[0]: [0, unpacked[2], unpacked[3]]}
-
-            # print(menu)
-            # print(unpacked)
-            make_menu(menu, unpacked)
-
-                # print(row['Item'], row['Category'], row['Price'], row['Quantity'])
-                # print(unpacked)
-                # menu.update({unpacked[0]: [0, unpacked[2], unpacked[3]]})
-                # if menu[unpacked[1]] not in menu:
-                #     print('test')
-                #     # menu[unpacked[1]] = {unpacked[0]: [0, unpacked[2], unpacked[3]]}
-                # print(menu)
-                # else:
-
-            # print(unpacked)
-
-    except:
+                menu[category[0]] = {}
+        for i in range(len(unpacked)):
+            menu[unpacked[i][1]].update({unpacked[i][0]: [0, float(unpacked[i][2]), int(unpacked[i][3])]})
+    except (KeyError, FileNotFoundError):
         print('Not a valid menu file; using default menu.')
 
     input_item()
-
-
-# def make_menu(menu, unpacked):
-#     for i in unpacked:
-#         if unpacked[i][1] in menu:
-#             menu[unpacked[i][1]] = {unpacked[i][0]: [0, unpacked[i][1], unpacked[i][2]]}
-#     print(menu)
 
 
 class Order:
