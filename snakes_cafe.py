@@ -48,7 +48,7 @@ menu = {
         'Tacos': [0, 10.00, 10],
         'Salad': [0, 10.00, 10],
         'Pizza': [0, 10.00, 10],
-        'Vegetarian Option': [0, 10.00, 10],
+        'Vegetarian Delight': [0, 10.00, 10],
         'Pasta': [0, 10.00, 10],
         'Ribs': [0, 10.00, 10],
         'Burrito': [0, 10.00, 10],
@@ -112,7 +112,7 @@ def print_menu():
     for key, value in menu.items():
         menu_string += '\n' + key + '\n\n'
         for k, v in value.items():
-            menu_string += k + '{:.2f}\n'.format(v[1]).rjust(25-len(k))
+            menu_string += k + '${:.2f}\n'.format(v[1]).rjust(25-len(k))
         menu_string += '\n'
     print(menu_string)
     return menu_string
@@ -124,7 +124,7 @@ def print_category(order_line):
     """
     category_string = '\n' + order_line + '\n'
     for key, value in menu[order_line].items():
-        category_string += key + '{:.2f}'.format(value[1]).rjust(25-len(key)) + '\n'
+        category_string += key + '${:.2f}'.format(value[1]).rjust(25-len(key)) + '\n'
     print(category_string)
     return category_string
 
