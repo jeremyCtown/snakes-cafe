@@ -162,7 +162,7 @@ def input_item():
         if order_line == 'Order':
             Order.display_order()
         elif 'Remove' in order_line:
-            Order.remove_item(order_line)
+            Order.remove_prompt(order_line)
         elif order_line == 'Menu':
             print_menu()
         elif order_line == 'Checkout':

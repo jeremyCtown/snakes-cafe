@@ -1,4 +1,4 @@
-def remove_item(order_line):
+def remove_prompt(order_line):
         """
         prompts Order.remove from current order
         """
@@ -8,11 +8,11 @@ def remove_item(order_line):
             if order_line in value.keys():
                 while True:
                 try:
-                    remove_quantity = int(input('How many orders of ' + order_line + ' would you like?\n> '))
+                    remove_quantity = int(input('You currently have {} {} in your cart. Remove how many?\n>'.format(value[order_line][0], order_line)))
                     if remove_quantity > 0:
                         Order.remove_item(order_line, remove_quantity)
                     else:
-                        print('Please enter a number between 1-' + str(value[order_line][0]))
+                        print('You currently have {} {} in your cart. Remove how many?\n>'.format(value[order_line][0], order_line))
                     break
                 except ValueError:
                     print('Please enter a number between 1-' + str(value[order_line][2]))
