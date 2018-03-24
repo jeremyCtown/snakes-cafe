@@ -151,7 +151,6 @@ def optional_menu():
     menu = togo_menu
     new_order.input_item()
 
-
 class Order:
     """
     new class
