@@ -116,17 +116,6 @@ def print_menu():
     return menu_string
 
 
-# def print_category(self, order_line):
-#     """
-#     prints category
-#     """
-#     category_string = '\n{}\n'.format(order_line)
-#     for key, value in menu[order_line].items():
-#         category_string += key + '${:.2f}\n'.format(value[1]).rjust(25-len(key))
-#     print(category_string)
-#     return category_string
-
-
 def optional_menu():
     """
     allow user to use their own menu
@@ -145,11 +134,12 @@ def optional_menu():
                 togo_menu[category[0]] = {}
         for i in range(len(unpacked)):
             togo_menu[unpacked[i][1]].update({unpacked[i][0]: [0, float(unpacked[i][2]), int(unpacked[i][3])]})
-    except (KeyError, FileNotFoundError):
+    except (KeyError, FileNotFoundError, IOError):
         print('Not a valid menu file; using default menu.')
 
     menu = togo_menu
     new_order.input_item()
+
 
 class Order:
     """
@@ -160,7 +150,7 @@ class Order:
         self.subtotal = 0
 
     def __str__(self):
-        return 'Welcome to Snakes Cafe'
+        return self.display_order()
 
     def __len__(self):
         counter = 0
