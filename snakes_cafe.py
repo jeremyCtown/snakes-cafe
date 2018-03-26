@@ -98,7 +98,6 @@ full_menu = {
     }
 }
 
-
 togo_menu = {}
 
 
@@ -235,7 +234,7 @@ class Order:
                             print('Please enter a number between 1-' + str(value[order_line][0]))
                 else:
                     print(order_line + ' is not in your order.')
-                    self.input_item()
+                    return order_line + ' is not in your order.'
 
     def remove_item(self, order_line, remove_quantity):
         """

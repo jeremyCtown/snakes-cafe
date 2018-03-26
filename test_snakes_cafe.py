@@ -2,9 +2,9 @@ import snakes_cafe as sc
 
 
 def test_print_menu():
-    '''
+    """
     test the print menu function
-    '''
+    """
     sc.menu = sc.full_menu
     assert sc.print_menu() == '''Menu:
 Appetizers
@@ -87,29 +87,10 @@ Hunch Punch        $5.50
 Seltzer            $1.00\n\n'''
 
 
-def test_print_order():
-    '''
-    test if current order prints
-    '''
-    sc.menu = sc.full_menu
-    sc.new_order = sc.Order()
-    assert 'Total Due' in sc.new_order.display_order()
-
-
-def test_remove_item():
-    '''
-    test that you are removing an item
-    '''
-    sc.menu = sc.full_menu
-    sc.new_order = sc.Order()
-    sc.menu['Appetizers']['Wings'][0] == 1
-    # assert 'has been removed.' in sc.new_order.remove_item    assert sc.menu['Appetizers']['Wings'][0] == 0
-
-
 def test_print_category():
-    '''
+    """
     test that a category is printed
-    '''
+    """
     sc.menu = sc.full_menu
     sc.new_order = sc.Order()
     assert sc.new_order.print_category('Appetizers') == '''\nAppetizers
@@ -127,11 +108,50 @@ Chips              $2.00
 Oreos              $2.00\n'''
 
 
-def test_add_to_order():
-    '''
+def test_display_order():
+    """
+    test if current order prints
+    """
+    sc.menu = sc.full_menu
+    sc.new_order = sc.Order()
+    assert 'Total Due' in sc.new_order.display_order()
+
+
+def test_remove_invalid_item():
+    """
+    test that you are removing an item
+    """
+    sc.menu = sc.full_menu
+    sc.new_order = sc.Order()
+    assert sc.new_order.remove_prompt('Cheese') == 'Cheese is not in your order.'
+
+
+def test_add_invalid_item_to_order():
+    """
     test that an item gets added to order
-    '''
+    """
     sc.menu = sc.full_menu
     sc.new_order = sc.Order()
     assert sc.new_order.add_to_order('wangs') == 'Please enter a valid menu item'
 
+
+def test__len__():
+    """test that an UUID is made"""
+    sc.menu = sc.full_menu
+    sc.new_order = sc.Order()
+    sc.new_order.add_item('Wine', 1)
+    assert len(sc.new_order) == 1
+
+
+def test__str__():
+    """test that an UUID is made"""
+    sc.menu = sc.full_menu
+    sc.new_order = sc.Order()
+    sc.new_order.add_item('Wine', 1)
+    assert 'Total Due' in str(sc.new_order)
+
+
+def test_print_receipt():
+    """test to print a receipt"""
+    sc.menu = sc.full_menu
+    sc.new_order = sc.Order()
