@@ -1,13 +1,13 @@
 # The Snakes Cafe
 
 **Author**: Beverly and Jeremy
-**Version**: 1.0.2
+**Version**: 0.1.3
 
 ## Overview
 This application is a command line restaurant menu interface that allows the user to order menu items.
 
 ## Getting Started
-Fork and clone the repo from GitHub. Ensure you running python 3 with Pip. Create a virtual environment.
+Fork and clone the repo from GitHub. Ensure you running python 3 with Pip. Create a virtual environment. Install the pip packages in requirements.txt.
 
 ## Architecture
 This application uses Python 3 and a virtual environment.
@@ -17,7 +17,8 @@ This application uses Python 3 and a virtual environment.
 Currently not using any APIs.
 
 ## Change Log
-- (v1.0.2) 03-21-2018
-- (v1.0.1) 03-20-2018 20:30 Menu prints, more user functionalities added.
+- (v0.1.3) 03-25-2018 Refactored into Order class, all tests working
+- (v0.1.2) 03-21-2018 Try to make Order class
+- (v0.1.1) 03-20-2018 20:30 Menu prints, more user functionalities added.
 - 03-19-2018 17:30 Order and exit functionality completed.
-- (v1.0.0) 03-19-2018 16:00 Application Created.
+- (v0.1.0) 03-19-2018 16:00 Application Created.
