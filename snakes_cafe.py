@@ -115,13 +115,17 @@ def print_menu():
     return menu_string
 
 
-def optional_menu():
+def optional_menu_prompt():
+    filename = input('Enter your menu file: ').strip()
+    optional_menu(filename)
+
+
+def optional_menu(filename):
     """
     allow user to use their own menu
     """
     global menu
     global togo_menu
-    filename = input('Enter your menu file: ').strip()
     try:
         with open(filename) as csvfile:
             reader = csv.DictReader(csvfile)
@@ -135,7 +139,7 @@ def optional_menu():
             togo_menu[unpacked[i][1]].update({unpacked[i][0]: [0, float(unpacked[i][2]), int(unpacked[i][3])]})
     except (KeyError, FileNotFoundError, IOError):
         print('Not a valid menu file; using default menu.')
-
+        return False
     menu = togo_menu
     new_order.input_item()
 
@@ -172,7 +176,17 @@ class Order:
         print(category_string)
         return category_string
 
-    def add_to_order(self, order_line):
+    def add_quantity_prompt(self, order_line):
+        for key, value in menu.items():
+            if order_line in value:
+                order_quantity = int(input('How many orders of ' + order_line + ' would you like?\n> '))
+                self.add_to_order(order_line, order_quantity)
+                break
+        else:
+            print('Please enter a valid menu item')
+            return 'Please enter a valid menu item'
+
+    def add_to_order(self, order_line, order_quantity):
         """
         adds items to user order
         """
@@ -180,7 +194,6 @@ class Order:
             if order_line in value:
                 while True:
                     try:
-                        order_quantity = int(input('How many orders of ' + order_line + ' would you like?\n> '))
                         if order_quantity > 0:
                             self.add_item(order_line, order_quantity)
                         else:
@@ -189,9 +202,6 @@ class Order:
                     except ValueError:
                         print('Please enter a number between 1-' + str(value[order_line][2]))
                 break
-        else:
-            print('Please enter a valid menu item')
-            return 'Please enter a valid menu item'
 
     def add_item(self, order_line, order_quantity):
         """
@@ -246,7 +256,7 @@ class Order:
                 self.subtotal -= value[order_line][1] * remove_quantity
                 value[order_line][2] += remove_quantity
                 print('{} x{} has been removed. Your total is ${:.2f}\n'.format(order_line, remove_quantity, self.subtotal * 1.101))
-                self.input_item()
+                self.order_line_prompt()
 
     def display_order(self):
         """
@@ -284,16 +294,21 @@ Order #{}
         """
         with open('order-{}.txt'.format(self.order_id), 'w') as f:
             f.write(self.display_order())
+            return True
 
-    def input_item(self):
+    def order_line_prompt(self):
+        order_line = input('What would you like?\n> ').title()
+        self.input_item(order_line)
+
+    def input_item(self, order_line):
         """
         changes order according to user input
         """
         global menu
-        order_line = input('What would you like?\n> ').title()
         while order_line != 'Quit':
             if order_line == 'Order':
                 self.display_order()
+                # return True
             elif 'Remove' in order_line:
                 self.remove_prompt(order_line)
             elif order_line == 'Menu':
@@ -303,15 +318,16 @@ Order #{}
                     menu = togo_menu
                     print_menu()
             elif order_line == 'Togo':
-                optional_menu()
+                optional_menu_prompt()
             elif order_line == 'Checkout':
                 self.print_receipt()
             elif order_line in menu:
                 self.print_category(order_line)
             else:
-                self.add_to_order(order_line)
-            order_line = input('What would you like?\n> ').title()
+                self.add_quantity_prompt(order_line)
+            self.order_line_prompt()
         print('Thank you for coming by. See you soon!')
+        # return('Thank you for coming by. See you soon!')
         quit()
 
 
@@ -322,6 +338,6 @@ if __name__ == '__main__':
     print(order_prompt)
     try:
         new_order = Order()
-        new_order.input_item()
+        new_order.order_line_prompt()
     except KeyboardInterrupt:
         print('\nThanks for visiting the Snake Cafe.')

@@ -1,6 +1,80 @@
+import pytest
 import snakes_cafe as sc
 
+@pytest.fixture
+def order():
+    return sc.Order()
 
+
+def test_init_instance(order):
+    assert order.subtotal == 0
+
+
+def test__len__():
+    """
+    test that a UUID is made
+    """
+    sc.menu = sc.full_menu
+    sc.new_order = sc.Order()
+    sc.new_order.add_item('Wine', 1)
+    assert len(sc.new_order) == 1
+
+
+def test__str__():
+    """
+    test that a UUID is made
+    """
+    sc.menu = sc.full_menu
+    sc.new_order = sc.Order()
+    sc.new_order.add_item('Wine', 1)
+    assert 'Total Due' in str(sc.new_order)
+
+
+def test_input_item(order):
+    """
+    test to see if input_item interface is working. Have to toggle 'return' on main file
+    """
+    assert order.input_item('Quit') == 'Thank you for coming by. See you soon!'
+
+
+def test_display_order(order):
+    """
+    test if current order prints
+    """
+    assert 'Total Due' in order.display_order()
+
+
+def test_add_to_order(order):
+    assert order.add_to_order('Wings', 3) is None
+
+
+def test_add_invalid_item_to_order(order):
+    """
+    test that an item gets added to order
+    """
+    assert order.add_quantity_prompt('wangs') == 'Please enter a valid menu item'
+
+
+def test_item_added_success(order):
+    order.add_item('Wings', 3)
+    assert order.subtotal == 6.0
+
+
+def test_remove_invalid_item(order):
+    """
+    test that you are removing an item
+    """
+    assert order.remove_prompt('Cheese') == 'Cheese is not in your order.'
+
+
+def test_print_receipt(order):
+    """
+    test to print a receipt
+    """
+    assert order.print_receipt() is True
+
+
+# there is a bug that in pytest, not rendering in test same way as printed in app
 def test_print_menu():
     """
     test the print menu function
@@ -86,7 +160,7 @@ Wine               $5.50
 Hunch Punch        $5.50
 Seltzer            $1.00\n\n'''
 
-
+# there is a bug that in pytest, not rendering in test same way as printed in app
 def test_print_category():
     """
     test that a category is printed
@@ -106,52 +180,3 @@ Hummus             $2.00
 Almonds            $2.00
 Chips              $2.00
 Oreos              $2.00\n'''
-
-
-def test_display_order():
-    """
-    test if current order prints
-    """
-    sc.menu = sc.full_menu
-    sc.new_order = sc.Order()
-    assert 'Total Due' in sc.new_order.display_order()
-
-
-def test_remove_invalid_item():
-    """
-    test that you are removing an item
-    """
-    sc.menu = sc.full_menu
-    sc.new_order = sc.Order()
-    assert sc.new_order.remove_prompt('Cheese') == 'Cheese is not in your order.'
-
-
-def test_add_invalid_item_to_order():
-    """
-    test that an item gets added to order
-    """
-    sc.menu = sc.full_menu
-    sc.new_order = sc.Order()
-    assert sc.new_order.add_to_order('wangs') == 'Please enter a valid menu item'
-
-
-def test__len__():
-    """test that an UUID is made"""
-    sc.menu = sc.full_menu
-    sc.new_order = sc.Order()
-    sc.new_order.add_item('Wine', 1)
-    assert len(sc.new_order) == 1
-
-
-def test__str__():
-    """test that an UUID is made"""
-    sc.menu = sc.full_menu
-    sc.new_order = sc.Order()
-    sc.new_order.add_item('Wine', 1)
-    assert 'Total Due' in str(sc.new_order)
-
-
-def test_print_receipt():
-    """test to print a receipt"""
-    sc.menu = sc.full_menu
-    sc.new_order = sc.Order()
