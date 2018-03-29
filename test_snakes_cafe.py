@@ -1,6 +1,7 @@
 import pytest
 import snakes_cafe as sc
 
+
 @pytest.fixture
 def order():
     return sc.Order()
@@ -12,7 +13,7 @@ def test_init_instance(order):
 
 def test__len__():
     """
-    test that a UUID is made
+    test length property is working
     """
     sc.menu = sc.full_menu
     sc.new_order = sc.Order()
@@ -22,7 +23,7 @@ def test__len__():
 
 def test__str__():
     """
-    test that a UUID is made
+    test the print function
     """
     sc.menu = sc.full_menu
     sc.new_order = sc.Order()
